@@ -4,6 +4,12 @@ require 'cwiid'
 
 bridge = Hue.application
 
+colour = Hue::Colors::ColorTemperature.new(6500)
+up = [colour,255]
+right = [colour,255]
+left = [colour,255]
+down = [colour,255]
+
 loop do
 	begin
 		puts "Searching for wiimote(press 1 + 2)"
@@ -13,11 +19,7 @@ loop do
 		
 		wiimote.led = 9
 		wiimote.get_state
-		colour = Hue::Colors::ColorTemperature.new(((([[wiimote.acc[1].to_f,150.0].min,100.0].max - 100.0)/50.0) * 4500) + 2000)
-		up = [colour,255]
-		right = [colour,255]
-		down = [colour,255]
-		left = [colour,255]
+
 		
 			begin
 				wiimote.get_state
@@ -89,6 +91,7 @@ loop do
 								bulb.on
 							end
 							#load preset
+							color = up[0]
 							bulb.color = up[0]
 							bulb.brightness = up[1]
 						end
@@ -106,6 +109,7 @@ loop do
 								bulb.on
 							end
 							#load preset
+							color = right[0]
 							bulb.color = right[0]
 							bulb.brightness = right[1]
 						end
@@ -123,8 +127,9 @@ loop do
 								bulb.on
 							end
 							#load preset
-							bulb.color = up[0]
-							bulb.brightness = up[1]
+							color = down[0]
+							bulb.color = down[0]
+							bulb.brightness = down[1]
 						end
 					end
 				end				
@@ -140,8 +145,9 @@ loop do
 								bulb.on
 							end
 							#load preset
-							bulb.color = up[0]
-							bulb.brightness = up[1]
+							color = left[0]
+							bulb.color = left[0]
+							bulb.brightness = left[1]
 						end
 					end
 				end
